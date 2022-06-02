@@ -1,15 +1,14 @@
 package test.test;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
+import com.destroystokyo.paper.event.player.PlayerAttackEntityCooldownResetEvent;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NotNull;
+
+import static org.bukkit.Sound.BLOCK_STONE_HIT;
 
 public class Listeners implements Listener {
     @EventHandler
@@ -27,17 +26,12 @@ public class Listeners implements Listener {
         e.getInventory().getItemInMainHand().getType();
 
         p.setDeathMessage(e.getPlayer() + "は死んだ\n" + "所持していたアイテム[ " + e.getItemInHand() + " ]");
-            }
-
-    @EventHandler
-    public void onDamaged(PlayerItemDamageEvent p) {
-
-
-
-
     }
 
+    @EventHandler
+    public void onAttack(PlayerAttackEntityCooldownResetEvent p) {
 
-
+        p.getPlayer().playSound(p.getPlayer().getLocation(), BLOCK_STONE_HIT, 2 ,1);
+    }
 
 }
