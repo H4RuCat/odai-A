@@ -26,8 +26,18 @@ public class Listeners implements Listener {
         Player p = e.getPlayer();
         ItemStack item = p.getItemInHand();
 
-        e.setDeathMessage(e.getPlayer() + "は死んだ\n" + "所持していたアイテム[ " + item.getItemMeta().getDisplayName() + " ]");
+        String itemName = "素手";
+        if ( item.hasItemMeta() ) {
+            if ( item.getItemMeta().hasDisplayName() ) {
+                itemName = item.getItemMeta().getDisplayName();
+            } else {
+                itemName = item.getType().name();
+            }
+        }
+
+        e.setDeathMessage(e.getPlayer() + "は死んだ\n" + "所持していたアイテム[ " + itemName + ChatColor.RESET + " ]");
     }
+
     @EventHandler
     public void onAttack(EntityDamageEvent e) {
         if(e.getEntityType() != EntityType.PLAYER) {
