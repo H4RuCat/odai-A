@@ -1,37 +1,48 @@
 package test.test;
 
-import com.destroystokyo.paper.event.player.PlayerAttackEntityCooldownResetEvent;
 import org.bukkit.*;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.inventory.ItemStack;
 
 import static org.bukkit.Sound.BLOCK_STONE_HIT;
 
 public class Listeners implements Listener {
     @EventHandler
-    public void onJoin(PlayerJoinEvent p) {
+    public void onJoin(PlayerJoinEvent e) {
 
-        Player e = p.getPlayer();
+        Player p = e.getPlayer();
 
-        p.setJoinMessage(ChatColor.YELLOW + e.getName() + "が戦場に参加したぞ！");
+        e.setJoinMessage(ChatColor.YELLOW + p.getName() + "が戦場に参加したぞ！");
     }
 
     @EventHandler
-    public void onDeath(PlayerDeathEvent p) {
-        Player e = p.getPlayer();
+    public void onDeath(PlayerDeathEvent e) {
+        Player p = e.getPlayer();
+        ItemStack item = p.getItemInHand();
 
-        e.getInventory().getItemInMainHand().getType();
-
-        p.setDeathMessage(e.getPlayer() + "は死んだ\n" + "所持していたアイテム[ " + e.getItemInHand() + " ]");
+        e.setDeathMessage(e.getPlayer() + "は死んだ\n" + "所持していたアイテム[ " + item.getItemMeta().getDisplayName() + " ]");
     }
-
     @EventHandler
-    public void onAttack(PlayerAttackEntityCooldownResetEvent p) {
+    public void onAttack(EntityDamageEvent e) {
+        if(e.getEntityType() != EntityType.PLAYER) {
+            return;
+        }
 
-        p.getPlayer().playSound(p.getPlayer().getLocation(), BLOCK_STONE_HIT, 2 ,1);
+        Location loc = e.getEntity().getLocation();
+        byAttackAuthor(loc);
     }
+
+    public void byAttackAuthor(Location loc) {
+        loc.getWorld().playSound(loc, BLOCK_STONE_HIT, 2, 1);
+    }
+
+
+
 
 }

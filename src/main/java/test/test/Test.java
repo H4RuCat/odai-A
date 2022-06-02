@@ -9,6 +9,8 @@ public final class Test extends JavaPlugin {
         // Plugin startup logic
         super.onEnable();
 
+        // event登録
+        getServer().getPluginManager().registerEvents(new Listeners(), this);
     }
 
     @Override
