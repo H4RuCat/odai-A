@@ -33,16 +33,10 @@ public class Listeners implements Listener {
         if(e.getEntityType() != EntityType.PLAYER) {
             return;
         }
-
         Location loc = e.getEntity().getLocation();
         byAttackAuthor(loc);
     }
-
     public void byAttackAuthor(Location loc) {
         loc.getWorld().playSound(loc, BLOCK_STONE_HIT, 2, 1);
     }
-
-
-
-
 }
