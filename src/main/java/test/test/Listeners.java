@@ -21,13 +21,13 @@ public class Listeners implements Listener {
     }
 
     @EventHandler
-    public void onKill(PlayerDeathEvent p) {
-
+    public void onDeath(PlayerDeathEvent p) {
         Player e = p.getPlayer();
-        ItemStack i = p.getPlayer().getItemInHand();
 
-        p.setDeathMessage(ChatColor.RED + e.getName() + "が死亡した \n" + ChatColor.YELLOW  + "所持していたアイテム: " + i.getI18NDisplayName());
-    }
+        e.getInventory().getItemInMainHand().getType();
+
+        p.setDeathMessage(e.getPlayer() + "は死んだ\n" + "所持していたアイテム[ " + e.getItemInHand() + " ]");
+            }
 
     @EventHandler
     public void onDamaged(PlayerItemDamageEvent p) {
